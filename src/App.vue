@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success mb-5">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">KIMIA</a>
       <button
@@ -60,7 +60,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid">
+  <div class="container">
     <router-view />
   </div>
 </template>

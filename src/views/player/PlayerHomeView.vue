@@ -16,32 +16,18 @@
             <tr v-if="this.isLoading">
               <td colspan="6"><h3>Loading...</h3></td>
             </tr>
-            <tr v-else v-for="(item, i) in this.players" :key="item.id">
+            <tr v-else v-for="(item, i) in this.teams" :key="item.id">
               <td v-text="i + 1"></td>
               <td v-text="item.name"></td>
               <td v-text="item.position"></td>
               <td v-text="item.team"></td>
               <td width="40%" align="right">
-                <!-- <router-link
-                  :to="{ path: 'view/' + item.id }"
-                  class="btn btn-sm btn-primary mr-2"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </router-link>
-                &nbsp; -->
                 <router-link
-                  :to="{ path: 'edit/' + item.id }"
+                  :to="{ path: 'editP/' + item.id }"
                   class="btn btn-sm btn-warning mr-2"
                 >
                   <i class="fa-solid fa-edit"></i>
                 </router-link>
-                &nbsp;
-                <!-- <button
-                  class="btn btn-sm btn-danger"
-                  v-on:click="this.deleteTeam(item.id, item.name)"
-                >
-                  <i class="fa-solid fa-trash"></i>
-                </button> -->
               </td>
             </tr>
           </tbody>
@@ -53,36 +39,31 @@
 
 <script>
 import axios from "axios";
-import { confirmar } from "../../functions";
+
 export default {
   data() {
     return {
-      players: null,
+      teams: null,
       isLoading: false,
+      urlBase: "http://127.0.0.1:8000/api/players"
     };
   },
   mounted() {
-    this.getPlayers();
+    this.getTeams();
   },
   methods: {
-    getPlayers() {
+    getTeams() {
       this.isLoading = true;
-      let url = "http://127.0.0.1:8000/api/players";
       axios
-        .get(url)
+        .get(this.urlBase)
         .then((response) => {
-          this.players = response.data;
-          console.log(this.players);
+          this.teams = response.data;
           this.isLoading = false;
         })
         .catch(() => {
           console.log("Error");
         });
-    },
-    deleteTeam(teamId, name) {
-      confirmar(teamId, "Eliminar jugador",`¿Está seguro de eliminar el jugador ${name}?`,"http://127.0.0.1:8000/api/players/");
-      this.isLoading = false;
-    },
+    }
   },
 };
 </script>

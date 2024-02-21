@@ -2,11 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TeamNew from '../views/team/TeamNew.vue'
 import TeamEdit from '../views/team/TeamEdit.vue'
-import TeamView from '../views/team/TeamView.vue'
 import TeamHomeView from '../views/team/TeamHomeView.vue'
 import PlayerNew from '../views/player/PlayerNew.vue'
 import PlayerEdit from '../views/player/PlayerEdit.vue'
-import PlayerView from '../views/player/PlayerView.vue'
 import PlayerHomeView from '../views/player/PlayerHomeView.vue'
 
 const routes = [
@@ -31,11 +29,6 @@ const routes = [
     component: TeamEdit
   },
   {
-    path: '/viewT/:id',
-    name: 'viewT',
-    component: TeamView
-  },
-  {
     path: '/listP',
     name: 'listP',
     component: PlayerHomeView
@@ -49,11 +42,6 @@ const routes = [
     path: '/editP/:id',
     name: 'editP',
     component: PlayerEdit
-  },
-  {
-    path: '/viewP/:id',
-    name: 'viewP',
-    component: PlayerView
   }
 ]
 
