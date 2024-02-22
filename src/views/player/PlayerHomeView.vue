@@ -43,13 +43,14 @@ import axios from "axios";
 export default {
   data() {
     return {
-      teams: null,
+      teams: [],
       isLoading: false,
       urlBase: "http://127.0.0.1:8000/api/players"
     };
   },
   mounted() {
     this.getTeams();
+    console.log(this.teams);
   },
   methods: {
     getTeams() {

@@ -23,33 +23,27 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-2 col-form-label">Position</label>
               <div class="col-sm-6">
-                <select
-                  class="form-select mb-3"
-                  @change="selectPosition($event)"
-                >
-                  <option selected>Choose position</option>
-                  <option value="midfield">midfield</option>
-                  <option value="goalkeeper">goalkeeper</option>
-                  <option value="defender">defender</option>
-                  <option value="forward">forward</option>
+                <select v-model="player.position" class="form-select mb-3">
+                  <option
+                    v-for="position in this.positions"
+                    :value="position.name"
+                    :key="position.id"
+                  >
+                    {{ position.name }}
+                  </option>
                 </select>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="name" class="col-sm-2 col-form-label">Team</label>
               <div class="col-sm-6">
-                <select class="form-select mb-3" @change="selectTeam($event)">
-                  <!-- <option selected>Choose team</option> -->
-                  <!-- <option v-if="!teamsLoaded" disabled>Loading...</option> -->
-                  <option selected value="{{player.idTeam}}">
-                    {{ player.team }}
-                  </option>
+                <select v-model="player.team" class="form-select mb-3">
                   <option
-                    value="{{ item.id }}"
-                    v-for="item in this.teams"
-                    :key="item.id"
+                    v-for="team in this.teams"
+                    :value="team.name"
+                    :key="team.id"
                   >
-                    {{ item.name }}
+                    {{ team.name }}
                   </option>
                 </select>
               </div>
@@ -100,8 +94,10 @@ export default {
       urlDelete: "",
       urlBase: "http://127.0.0.1:8000/api/players",
       urlBaseTeams: "http://127.0.0.1:8000/api/teams",
+      urlBasePositions: "http://127.0.0.1:8000/api/positions",
       path: "/listP",
-      teams: null,
+      teams: [],
+      positions: [],
     };
   },
   mounted() {
@@ -112,6 +108,7 @@ export default {
     this.urlEdit = `${this.urlBase}/${this.player.id}/edit`;
     this.getPlayer();
     this.getTeams();
+    this.getPositions();
   },
   methods: {
     getPlayer() {
@@ -162,14 +159,18 @@ export default {
           console.log("Error");
         });
     },
-    selectPosition(event) {
-      this.position = event.target.value;
-      console.log(event.target.value);
-    },
-    selectTeam(event) {
-      this.team = event.target.value;
-      console.log(event.target.value);
-    },
+    getPositions() {
+      this.isLoading = true;
+      axios
+        .get(this.urlBasePositions)
+        .then((response) => {
+          this.positions = response.data;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          console.log("Error");
+        });
+    }
   },
 };
 </script>
